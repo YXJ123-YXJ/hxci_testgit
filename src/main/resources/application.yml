@@ -1,0 +1,31 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: eureka-zuul
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:9090/eureka
+zuul:
+  #关闭默认路由匹配规则
+  ignored-services: '*'
+  routes:
+    #第一种写法
+    rout1:
+      serviceId: eureka-provider
+      path: /provider/**
+    #第二种写法 简化写法  由原来的三行变成了两行代码
+    #    eureka-customer:
+    #      path: /customer/**
+    #第三种写法 更简洁写法  就一行代码
+    eureka-customer: /customer/**
+  #
+  ribbon:
+    eager-load:
+      enabled: true
+  SendResponseFilter:
+    pre:
+      disable: true
